@@ -20,9 +20,20 @@ mybatis:
   #type-aliases-package: com.exorcist.pojo
   #mapper-locations: classpath:com.game.server.mapper/*.xml
   configuration:
-    map-underscore-to-camel-case: true
+    map-underscore-to-camel-case: true #数据库驼峰命名
 
-# swagger-ui
 springdoc:
   swagger-ui:
-    path : /swagger-ui.html
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+    enabled: true
+
+  api-docs:
+    path: /v3/api-docs
+    enabled: true
+
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn

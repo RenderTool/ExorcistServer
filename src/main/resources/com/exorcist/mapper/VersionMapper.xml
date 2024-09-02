@@ -5,10 +5,55 @@
 
 <mapper namespace="com.exorcist.mapper.VersionMapper">
 
-    <select id="selectAll" resultType="com.exorcist.pojo.Version">
+    <insert id="addGameVersion" parameterType="com.exorcist.pojo.VersionPojo"  useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `sys_version_full` (`versionNumber`, `fileName`, `md5`, `md5list`, `downloadUrl`,`status`, `operator`)
+        VALUES (#{versionNumber}, #{fileName}, #{md5}, #{md5List}, #{downloadUrl}, #{status}, #{operator})
+    </insert>
 
-        SELECT * FROM sys_version
+    <insert id="addGameLauncher" parameterType="com.exorcist.pojo.VersionPojo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `sys_version_launcher` (`versionNumber`, `fileName`, `md5`, `downloadUrl`, `status`,`operator`)
+        VALUES (#{versionNumber}, #{fileName}, #{md5}, #{downloadUrl}, #{status},#{operator})
+    </insert>
 
+    <insert id="addGamePatch" parameterType="com.exorcist.pojo.VersionPojo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `sys_version_patch` (`versionNumber`, `fileName`, `md5`, `downloadUrl`,`status`, `operator`)
+        VALUES (#{versionNumber}, #{fileName}, #{md5}, #{downloadUrl}, #{status}, #{operator})
+    </insert>
+
+    <select id="getPatchList" resultType="com.exorcist.pojo.VersionPojo">
+        SELECT *
+        FROM sys_version_full
     </select>
+
+    <select id="selectGameVersionByVersionNumber" resultType="com.exorcist.pojo.VersionPojo">
+        SELECT *
+        FROM sys_version_full
+        WHERE versionNumber = #{versionNumber}
+    </select>
+
+    <select id="selectGameLauncherByVersionNumber" resultType="com.exorcist.pojo.VersionPojo">
+        SELECT *
+        FROM sys_version_launcher
+        WHERE versionNumber = #{versionNumber}
+    </select>
+
+    <select id="selectGamePatchByVersionNumber" resultType="com.exorcist.pojo.VersionPojo">
+        SELECT *
+        FROM sys_version_patch
+        WHERE versionNumber = #{versionNumber}
+    </select>
+
+    <update id="markPatchAsDeleted">
+        UPDATE sys_version_patch
+        SET status  = #{status},
+            operator  = #{operator}
+        WHERE versionNumber = #{versionNumber}
+    </update>
+
+    <delete id="permanentPatchDelete">
+        DELETE
+        FROM sys_version_patch
+        WHERE versionNumber = #{versionNumber}
+    </delete>
 
 </mapper>

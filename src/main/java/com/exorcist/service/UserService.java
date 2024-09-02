@@ -1,24 +1,20 @@
 package com.exorcist.service;
 
-import com.exorcist.pojo.User;
-
-import java.util.List;
+import com.exorcist.dto.user.LoginDTO;
+import com.exorcist.dto.user.RegisterDTO;
+import com.exorcist.dto.user.PasswordDTO;
+import com.exorcist.exception.ResultInfo;
 
 public interface UserService
 {
 
-    public List<User> selectAll();
+    //注册
+    ResultInfo registerUser(RegisterDTO registerDTO);
 
-    public User selectById(int id);
+    //登录
+    ResultInfo loginUser(LoginDTO loginDTO);
 
-    public User selectByUsername(String username);
-
-    public User selectByEmail(String email);
-
-    public void insertUser(User user);
-
-    public void updateUser(User user);
-
-    public void deleteUser(int id);
+    //更新密码
+    ResultInfo updateUserPassword(PasswordDTO updateUserPasswordDTO);
 
 }

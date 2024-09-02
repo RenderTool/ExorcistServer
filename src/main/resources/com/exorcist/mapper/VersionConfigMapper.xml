@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.exorcist.mapper.VersionConfigMapper">
+
+    <select id="getLatestLauncher" resultType="com.exorcist.pojo.VersionConfigPojo">
+        SELECT *
+        FROM sys_version_config
+        WHERE configKey ="sys_version_launcher"
+    </select>
+
+    <select id="getLatestGame" resultType="com.exorcist.pojo.VersionConfigPojo">
+        SELECT *
+        FROM sys_version_config
+        WHERE configKey ="sys_version_full"
+    </select>
+
+    <update id="updateConfig"  parameterType="com.exorcist.pojo.VersionConfigPojo">
+        UPDATE sys_version_patch
+        SET configValue  = #{configValue},
+            description  = #{description},
+            operator  = #{operator}
+        WHERE configKey = #{configKey}
+    </update>
+
+</mapper>

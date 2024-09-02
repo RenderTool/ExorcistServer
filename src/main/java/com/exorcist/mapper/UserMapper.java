@@ -1,21 +1,24 @@
 package com.exorcist.mapper;
 
-import com.exorcist.pojo.User;
+import com.exorcist.pojo.UserPojo;
+
 import java.util.List;
 
 public interface UserMapper {
 
-    public List<User> selectAll();
+    public List<UserPojo> selectAll();
 
-    public User selectById(int id);
+    public UserPojo selectById(Long id);
 
-    public User selectByUsername(String username);
+    public UserPojo selectByUsername(String username);
 
-    public User selectByEmail(String email);
+    public UserPojo selectByEmail(String email);
 
-    public void insertUser(User user);
+    public UserPojo selectByMobile(String mobile);
 
-    public void updateUser(User user);
+    public void insertUser(UserPojo userPojo);
+
+    public void updateUser(UserPojo userPojo);
 
     public  void deleteUser(int id);
 }

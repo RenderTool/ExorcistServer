@@ -5,36 +5,56 @@
 
 <mapper namespace="com.exorcist.mapper.UserMapper">
 
-    <select id="selectAll" resultType="com.exorcist.pojo.User">
-        SELECT * FROM sys_user
+    <select id="selectAll" resultType="com.exorcist.pojo.UserPojo">
+        SELECT *
+        FROM sys_user
     </select>
 
-    <select id="selectById" resultType="com.exorcist.pojo.User">
-        SELECT * FROM sys_user WHERE id = #{id}
+    <select id="selectById" resultType="com.exorcist.pojo.UserPojo">
+        SELECT *
+        FROM sys_user
+        WHERE id = #{id}
     </select>
 
-    <select id="selectByUsername" resultType="com.exorcist.pojo.User">
-        SELECT * FROM sys_user WHERE name = #{username}
+    <select id="selectByUsername" resultType="com.exorcist.pojo.UserPojo">
+        SELECT *
+        FROM sys_user
+        WHERE name = #{username}
     </select>
 
-    <select id="selectByEmail" resultType="com.exorcist.pojo.User">
-        SELECT * FROM sys_user WHERE email = #{email}
+    <select id="selectByEmail" resultType="com.exorcist.pojo.UserPojo">
+        SELECT *
+        FROM sys_user
+        WHERE email = #{email}
     </select>
 
-    <insert id="insertUser" parameterType="com.exorcist.pojo.User" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO sys_user (name, password, salt, email, mobile, status, dept_id, create_by, create_time)
-        VALUES (#{name}, #{password}, #{salt}, #{email}, #{mobile}, #{status}, #{dept_id}, #{create_by}, #{create_time})
+    <select id="selectByMobile" resultType="com.exorcist.pojo.UserPojo">
+        SELECT *
+        FROM sys_user
+        WHERE mobile = #{mobile}
+    </select>
+
+    <insert id="insertUser" parameterType="com.exorcist.pojo.UserPojo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_user (name, password, salt, email, mobile, status, create_time)
+        VALUES (#{name}, #{password}, #{salt}, #{email}, #{mobile}, #{status}, #{create_time})
     </insert>
 
-    <update id="updateUser" parameterType="com.exorcist.pojo.User">
+    <update id="updateUser" parameterType="com.exorcist.pojo.UserPojo">
         UPDATE sys_user
-        SET name = #{name}, password = #{password}, salt = #{salt}, email = #{email}, mobile = #{mobile},
-            status = #{status}, dept_id = #{dept_id}, create_by = #{create_by}, create_time = #{create_time}
+        SET name        = #{name},
+            password    = #{password},
+            salt        = #{salt},
+            email       = #{email},
+            mobile      = #{mobile},
+            status      = #{status},
+            create_time = #{create_time}
         WHERE id = #{id}
     </update>
 
     <delete id="deleteUser" parameterType="int">
-        DELETE FROM sys_user WHERE id = #{id}
+        DELETE
+        FROM sys_user
+        WHERE id = #{id}
     </delete>
 
 </mapper>
