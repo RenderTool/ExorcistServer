@@ -18,7 +18,7 @@
     </select>
 
     <update id="updateConfig"  parameterType="com.exorcist.pojo.VersionConfigPojo">
-        UPDATE sys_version_patch
+        UPDATE sys_version_config
         SET configValue  = #{configValue},
             description  = #{description},
             operator  = #{operator}

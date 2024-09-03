@@ -15,7 +15,7 @@ import com.qcloud.cos.model.PutObjectRequest;
 import com.qcloud.cos.model.PutObjectResult;
 import com.qcloud.cos.region.Region;
 
-public class TencentCOS {
+public class tencentCOSTest {
 //    private static String secretId = System.getenv("SECRETID");
 //    private static String secretKey = System.getenv("SECRETKEY");
 //    private static String bucketName = System.getenv("BUCKET_NAME");

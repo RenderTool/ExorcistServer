@@ -1,6 +1,5 @@
 package com.exorcist.mapper;
 
-import com.exorcist.dto.version.VersionDTO;
 import com.exorcist.pojo.VersionPojo;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,7 +20,7 @@ public interface VersionMapper {
 
     void addGamePatch(VersionPojo versionPojo);
 
-    void markPatchAsDeleted(@Param("versionNumber") String versionNumber, @Param("operator")String operator);
+    void updatedPatch(VersionPojo versionPojo);
 
     void permanentPatchDelete(@Param("versionNumber") String versionNumber);
 

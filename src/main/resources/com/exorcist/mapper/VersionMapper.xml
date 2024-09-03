@@ -6,7 +6,7 @@
 <mapper namespace="com.exorcist.mapper.VersionMapper">
 
     <insert id="addGameVersion" parameterType="com.exorcist.pojo.VersionPojo"  useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO `sys_version_full` (`versionNumber`, `fileName`, `md5`, `md5list`, `downloadUrl`,`status`, `operator`)
+        INSERT INTO `sys_version_full` (`versionNumber`, `fileName`, `md5`, `md5List`, `downloadUrl`,`status`, `operator`)
         VALUES (#{versionNumber}, #{fileName}, #{md5}, #{md5List}, #{downloadUrl}, #{status}, #{operator})
     </insert>
 
@@ -43,10 +43,14 @@
         WHERE versionNumber = #{versionNumber}
     </select>
 
-    <update id="markPatchAsDeleted">
+    <update id="updatedPatch" parameterType="com.exorcist.pojo.VersionPojo">
         UPDATE sys_version_patch
-        SET status  = #{status},
-            operator  = #{operator}
+        SET versionNumber  = #{versionNumber},
+            fileName  = #{fileName},
+            md5  = #{md5},
+            downloadUrl  = #{downloadUrl},
+            status  = #{status},
+            operator  = #{operator},
         WHERE versionNumber = #{versionNumber}
     </update>
 

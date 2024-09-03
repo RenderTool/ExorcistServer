@@ -28,7 +28,9 @@ public class VersionServiceImpl implements VersionService
         versionPojo.setVersionNumber(versionDTO.getVersionNumber());
         versionPojo.setFileName(versionDTO.getFileName());
         versionPojo.setMd5(versionDTO.getMd5());
+        versionPojo.setMd5List(versionDTO.getMd5list());
         versionPojo.setDownloadUrl(versionDTO.getDownloadUrl());
+        versionPojo.setOperator("admin");
         //TODO 获取用户信息然后设置operator
         return versionPojo;
     }
@@ -38,6 +40,7 @@ public class VersionServiceImpl implements VersionService
         versionConfigPojo.setConfigKey(versionConfigDTO.getConfigKey());
         versionConfigPojo.setConfigValue(versionConfigDTO.getConfigValue());
         versionConfigPojo.setDescription(versionConfigDTO.getDescription());
+        versionConfigPojo.setOperator("admin");
         //TODO 获取用户信息然后设置operator
         return versionConfigPojo;
     }
@@ -76,13 +79,12 @@ public class VersionServiceImpl implements VersionService
     }
 
     @Override
-    public ResultInfo markPatchAsDeleted(String versionNumber) {
-        if(versionMapper.selectGamePatchByVersionNumber(versionNumber) == null)
+    public ResultInfo updatedPatch(VersionDTO versionDTO) {
+        if(versionMapper.selectGamePatchByVersionNumber(versionDTO.getVersionNumber()) == null)
         {
             return ResultInfo.error("补丁不存在");
         }
-        String operator = "";
-        versionMapper.markPatchAsDeleted(versionNumber,operator);
+        versionMapper.updatedPatch(versionPojoTransfer(versionDTO));
         return ResultInfo.success();
     }
 

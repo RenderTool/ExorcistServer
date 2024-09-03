@@ -7,8 +7,8 @@ import lombok.Data;
 @Data
 public class VersionConfigDTO {
 
-    @Schema(description = "配置项名称", example = "sys_version_launcher")
-    @NotBlank(message = "配置项名称不能为空")
+    @Schema(description = "配置名称", example = "sys_version_launcher")
+    @NotBlank(message = "配置名称不能为空")
     private String configKey;
 
     @Schema(description = "版本ID", example = "launcher-v0.0.1")

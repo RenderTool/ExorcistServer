@@ -18,7 +18,7 @@ public interface VersionService
 
     ResultInfo addGamePatch(VersionDTO versionDTO);
 
-    ResultInfo markPatchAsDeleted(String versionNumber);
+    ResultInfo updatedPatch(VersionDTO versionDTO);
 
     ResultInfo permanentPatchDelete(String versionNumber);
 

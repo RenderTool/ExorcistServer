@@ -24,7 +24,7 @@ public class VersionController {
         return VersionService.getLatestLauncher();
     }
 
-    @Operation(summary = "获取游戏完整包", description = "获取最新完整包压缩文件地址")
+    @Operation(summary = "获取游戏完整包", description = "获取最新完整包文件地址")
     @GetMapping("/getLatestGameZip")
     public ResultInfo getLatestGame() {
         return VersionService.getLatestGame();
