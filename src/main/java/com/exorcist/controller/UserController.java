@@ -33,8 +33,12 @@ public class UserController {
         return userService.loginUser(loginDTO);
     }
 
-//    @Operation(summary = "用户登出", description = "登出功能")
-//    @PostMapping(value = "/logout")
+    @Operation(summary = "用户登出", description = "登出功能")
+    @PostMapping(value = "/logout")
+    public ResultInfo logoutUser()
+    {
+        return userService.logoutUser();
+    }
 
 
 //    @Operation(summary = "根据ID获取用户信息", description = "通过用户ID获取用户的详细信息")
@@ -43,7 +47,7 @@ public class UserController {
 //        return ResultInfo.success();
 //    }
 
-    @Operation(summary = "更新用户密码", description = "通过手机号更新用户密码")
+    @Operation(summary = "修改密码", description = "通过手机号更新用户密码")
     @PutMapping("/update")
     public ResultInfo updateUserPassword(@RequestBody @Valid PasswordDTO updateUserPasswordDTO,
                                          @RequestHeader(value = "Authorization") String token) {

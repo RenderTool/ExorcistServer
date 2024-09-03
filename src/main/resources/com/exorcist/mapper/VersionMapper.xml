@@ -45,12 +45,11 @@
 
     <update id="updatedPatch" parameterType="com.exorcist.pojo.VersionPojo">
         UPDATE sys_version_patch
-        SET versionNumber  = #{versionNumber},
-            fileName  = #{fileName},
+        SET fileName  = #{fileName},
             md5  = #{md5},
             downloadUrl  = #{downloadUrl},
             status  = #{status},
-            operator  = #{operator},
+            operator  = #{operator}
         WHERE versionNumber = #{versionNumber}
     </update>
 

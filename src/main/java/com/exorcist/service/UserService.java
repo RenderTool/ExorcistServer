@@ -17,4 +17,5 @@ public interface UserService
     //更新密码
     ResultInfo updateUserPassword(PasswordDTO updateUserPasswordDTO,String token);
 
+    ResultInfo logoutUser();
 }

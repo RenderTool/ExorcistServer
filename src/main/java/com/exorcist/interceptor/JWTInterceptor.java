@@ -4,6 +4,7 @@ import com.auth0.jwt.exceptions.AlgorithmMismatchException;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.exorcist.util.JwtTokenUtil;
+import com.exorcist.util.ThreadLocalUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,19 +30,20 @@ public class JWTInterceptor implements HandlerInterceptor {
         String token = request.getHeader("Authorization");
 
         try {
+
             // 解析 token
             Map<String, Object> claims = JwtTokenUtil.parseToken(token);
             String userID = claims.get("ID").toString();
 
-            System.out.println("用户id:"+userID);
+            // threadLocalUtil 添加对应的用户ID
+            ThreadLocalUtil.set(claims);
 
             // 拿到 Redis 中的 token
-
             ValueOperations<String, String> ops = redisTemplate.opsForValue();
             System.out.println(ops.get(userID));
-
             String redisToken = ops.get(userID);
-            if(redisToken == null || !redisToken.equals(token)) {
+
+            if(redisToken == null  || !redisToken.equals(token)) {
                 throw new Exception();
             }
             return true; // 放行请求
@@ -67,5 +69,11 @@ public class JWTInterceptor implements HandlerInterceptor {
 
             return false; // 拦截请求
         }
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        //ThreadLocal清空数据
+        ThreadLocalUtil.remove();
     }
 }

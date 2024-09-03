@@ -10,6 +10,7 @@ import com.exorcist.service.UserService;
 import com.exorcist.util.EncryptionUtil;
 import com.exorcist.util.JwtTokenUtil;
 
+import com.exorcist.util.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -113,15 +114,19 @@ public class UserServiceImpl implements UserService {
     public ResultInfo updateUserPassword(PasswordDTO updateUserPasswordDTO, String token) {
         // 比对密码，检查是否重复
         if (Objects.equals(updateUserPasswordDTO.getNewPassword(), updateUserPasswordDTO.getOldPassword())) {
-            return ResultInfo.error("参数错误");
+            return ResultInfo.error("新旧密码重复");
         }
         UserPojo dbUserPojo = userMapper.selectByMobile(updateUserPasswordDTO.getMobile());
 
-        if (dbUserPojo != null && encryptionUtil.verifyPassword(updateUserPasswordDTO.getOldPassword(), dbUserPojo.getPassword(), dbUserPojo.getSalt())) {
+        if(dbUserPojo == null || dbUserPojo.getId() == null)
+        {
+            return ResultInfo.error("状态异常");
+        }
+        if (encryptionUtil.verifyPassword(updateUserPasswordDTO.getOldPassword(), dbUserPojo.getPassword(), dbUserPojo.getSalt())) {
+
             // 删除Redis中的token
             ValueOperations<String, String> operations = redisTemplate.opsForValue();
-            //TODO
-            operations.getOperations().delete("50");
+            operations.getOperations().delete(dbUserPojo.getId().toString());
 
             // 加密新密码
             String salt = encryptionUtil.generateSalt();
@@ -135,4 +140,16 @@ public class UserServiceImpl implements UserService {
         return ResultInfo.error("旧密码错误，请重新输入");
     }
 
+    @Override
+    public ResultInfo logoutUser() {
+
+        Map<String, Object> getThreadLocal =  ThreadLocalUtil.getThreadLocal();
+        String userID = getThreadLocal.get("ID").toString();
+
+        // 删除Redis中的token
+        ValueOperations<String, String> operations = redisTemplate.opsForValue();
+        operations.getOperations().delete(userID);
+
+        return ResultInfo.success("登出成功");
+    }
 }

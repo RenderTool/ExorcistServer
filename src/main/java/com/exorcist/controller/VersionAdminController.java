@@ -57,7 +57,7 @@ public class VersionAdminController {
     }
 
     @Operation(
-            summary = "补丁标记",
+            summary = "修改补丁",
             description = "输入补丁号、标记补丁状态,版本号请同个API申请获取"
     )
 

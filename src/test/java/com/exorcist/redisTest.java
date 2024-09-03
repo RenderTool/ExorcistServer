@@ -1,6 +1,5 @@
 package com.exorcist;
 
-import com.exorcist.util.JwtTokenUtil;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

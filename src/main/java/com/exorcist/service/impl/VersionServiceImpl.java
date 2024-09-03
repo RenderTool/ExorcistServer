@@ -8,10 +8,12 @@ import com.exorcist.mapper.VersionMapper;
 import com.exorcist.pojo.VersionConfigPojo;
 import com.exorcist.pojo.VersionPojo;
 import com.exorcist.service.VersionService;
+import com.exorcist.util.ThreadLocalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class VersionServiceImpl implements VersionService
@@ -30,8 +32,9 @@ public class VersionServiceImpl implements VersionService
         versionPojo.setMd5(versionDTO.getMd5());
         versionPojo.setMd5List(versionDTO.getMd5list());
         versionPojo.setDownloadUrl(versionDTO.getDownloadUrl());
-        versionPojo.setOperator("admin");
-        //TODO 获取用户信息然后设置operator
+        versionPojo.setStatus(true);
+        Map<String, Object> getThreadLocal =  ThreadLocalUtil.getThreadLocal();
+        versionPojo.setOperator(getThreadLocal.get("ID").toString());
         return versionPojo;
     }
 
@@ -40,8 +43,8 @@ public class VersionServiceImpl implements VersionService
         versionConfigPojo.setConfigKey(versionConfigDTO.getConfigKey());
         versionConfigPojo.setConfigValue(versionConfigDTO.getConfigValue());
         versionConfigPojo.setDescription(versionConfigDTO.getDescription());
-        versionConfigPojo.setOperator("admin");
-        //TODO 获取用户信息然后设置operator
+        Map<String, Object> getThreadLocal =  ThreadLocalUtil.getThreadLocal();
+        versionConfigPojo.setOperator(getThreadLocal.get("ID").toString());
         return versionConfigPojo;
     }
 
